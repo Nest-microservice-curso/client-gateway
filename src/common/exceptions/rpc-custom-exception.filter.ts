@@ -11,6 +11,14 @@ export class RpcCustomExceptionFilter
     const response = ctx.getResponse();
 
     const rpcError = exception.getError();
+    const errorString = exception.getError().toString();
+
+    if (errorString.includes('Empty response')) {
+      return response.status(500).json({
+        ok: false,
+        message: errorString.substring(0, errorString.indexOf('(') - 1),
+      });
+    }
 
     if (
       typeof rpcError === 'object' &&

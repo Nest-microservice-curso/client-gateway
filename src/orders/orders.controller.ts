@@ -33,7 +33,11 @@ export class OrdersController {
 
   @Get()
   findAll(@Query() paginationOrdersDto: PaginationOrdersDto) {
-    return this.ordersService.send('findAllOrders', paginationOrdersDto);
+    return this.ordersService.send('findAllOrders', paginationOrdersDto).pipe(
+      catchError((error) => {
+        throw new RpcException(error);
+      }),
+    );
   }
 
   @Get(':id')
