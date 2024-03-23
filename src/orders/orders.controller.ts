@@ -12,7 +12,7 @@ import {
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { NATS_SERVICES } from 'src/config';
-import { catchError } from 'rxjs';
+import { catchError, firstValueFrom } from 'rxjs';
 import { PaginationOrdersDto } from './dto/pagination-orders-dto';
 import { StatusOrderDto } from './dto';
 
@@ -23,12 +23,15 @@ export class OrdersController {
   ) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.send('createOrder', createOrderDto).pipe(
-      catchError((error) => {
-        throw new RpcException(error);
-      }),
-    );
+  async create(@Body() createOrderDto: CreateOrderDto) {
+    try {
+      const order = await firstValueFrom(
+        this.ordersService.send('createOrder', createOrderDto),
+      );
+      return order;
+    } catch (error) {
+      throw new RpcException(error);
+    }
   }
 
   @Get()

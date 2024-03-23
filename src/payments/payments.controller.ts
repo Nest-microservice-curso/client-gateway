@@ -8,7 +8,7 @@ import { UpdatePaymentDto } from './dto/update-payment.dto';
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
-  @MessagePattern('createPayment')
+  @MessagePattern('create.payment.session')
   create(@Payload() createPaymentDto: CreatePaymentDto) {
     return this.paymentsService.create(createPaymentDto);
   }
