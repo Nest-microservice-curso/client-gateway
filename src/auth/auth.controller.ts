@@ -1,9 +1,11 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Logger, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { NATS_SERVICES } from 'src/config';
 
 @Controller('auth')
 export class AuthController {
+  private logger = new Logger('client-auth.controller.ts');
+
   constructor(@Inject(NATS_SERVICES) private readonly client: ClientProxy) {}
 
   @Post('register-user')
