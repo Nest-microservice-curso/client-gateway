@@ -18,7 +18,6 @@ RUN npm ci -f --only=production && npm cache clean --force
 #Final image
 FROM node:21-alpine3.19 as production
 WORKDIR /usr/src/app
-COPY --from=dependencies package*.json ./
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app/dist ./dist
 ENV NODE_ENV=production
