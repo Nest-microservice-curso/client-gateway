@@ -36,8 +36,10 @@ export class AuthController {
   @Post('login-user')
   @HttpCode(200)
   loginUser(@Body() loginDto: LoginDto) {
+    console.log('llamando al nats', loginDto);
     const login = this.client.send('auth.login.user', loginDto).pipe(
       catchError((error) => {
+        console.log('Error', error);
         throw new RpcException(error);
       }),
     );
