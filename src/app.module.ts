@@ -4,6 +4,7 @@ import { OrdersModule } from './orders/orders.module';
 import { NatsModule } from './transports/nats.module';
 import { PaymentsModule } from './payments/payments.module';
 import { AuthModule } from './auth/auth.module';
+import { HealthCheckModule } from './health-check/health-check.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
     NatsModule,
     PaymentsModule,
     AuthModule,
+    HealthCheckModule,
   ],
   controllers: [],
   providers: [],
